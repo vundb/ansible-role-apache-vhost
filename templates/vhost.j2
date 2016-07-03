@@ -1,0 +1,24 @@
+<VirtualHost {{ item.virtual_host | default('*:80 *:8080') }}>
+  ServerName {{ item.server_name }}
+
+  ## Vhost docroot
+  DocumentRoot {{ item.document_root }}
+
+  ## Server aliases
+  ServerAlias {{ item.server_alias }}
+
+  ## Directories
+  <Directory {{ item.document_root }}>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Require all granted
+    DirectoryIndex index.html index.php
+  </Directory>
+
+  ## Load additional static includes
+
+  ## Logging
+  ErrorLog /var/log/apache2/{{ item.server_name }}_error.log
+  ServerSignature Off
+  CustomLog /var/log/apache2/{{ item.server_name }}_access.log combined
+</VirtualHost>

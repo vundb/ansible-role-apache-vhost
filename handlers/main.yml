@@ -1,0 +1,6 @@
+---
+
+- name: apache - restart
+  become: yes
+  service: name="{{ item }}" state="restarted"
+  with_items: "{{ apache_services }}"

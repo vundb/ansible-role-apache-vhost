@@ -1,0 +1,30 @@
+#
+# Array with services to be restarted on changes.
+#
+apache_services: ["apache2"]
+
+
+#
+# System user for apache process.
+#
+apache_user: "apache"
+
+
+#
+# System group for apache process.
+#
+apache_group: "apache"
+
+#
+# Array with vhosts to be configured.
+#
+# apache_vhosts:
+#   - label:         "localhost"
+#     virtual_host:  "*:80"
+#     server_name:   "localhost"
+#     server_alias:  "localhost"
+#     document_root: "/var/www"
+#     state:         "present"
+#     template:      "vhost.j2"
+#
+apache_vhosts: []

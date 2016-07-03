@@ -1,0 +1,21 @@
+---
+
+# create or remove configuration files for virtual hosts
+
+- name: create virtual hosts
+  become: yes
+  template: src="{{ item.template | default('vhost.j2')}}"
+            dest="/etc/apache2/vhosts.d/{{ item.label }}.conf"
+            owner="{{ apache_user }}"
+            group="{{ apache_group }}"
+            mode="0644"
+  when: (item.state is not defined) or ((item.state is defined) and (item.state == "present"))
+  with_items: "{{ apache_vhosts }}"
+  notify: apache - restart
+
+- name: remove virtual hosts
+  become: yes
+  file: path="/etc/apache2/vhosts.d/{{ item.label }}.conf" state="absent"
+  when: (item.state is defined) and (item.state == "absent")
+  with_items: "{{ apache_vhosts }}"
+  notify: apache - restart

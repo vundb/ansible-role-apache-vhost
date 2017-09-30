@@ -9,7 +9,7 @@
 
   ## Directories
   <Directory {{ item.document_root }}>
-    Options Indexes FollowSymLinks MultiViews
+    Options -Indexes +FollowSymLinks +MultiViews
     AllowOverride All
     Require all granted
     DirectoryIndex index.html index.php

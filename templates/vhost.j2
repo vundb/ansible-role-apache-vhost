@@ -1,11 +1,16 @@
 <VirtualHost {{ item.virtual_host | default('*:80 *:8080') }}>
+{% if item.server_name is defined %}
+  ## Server name
   ServerName {{ item.server_name }}
+{% endif %}
 
   ## Vhost docroot
-  DocumentRoot {{ item.document_root }}
+  DocumentRoot {{ item.document_root | default('/var/www/localhost') }}
 
+{% if item.server_alias is defined %}
   ## Server aliases
   ServerAlias {{ item.server_alias }}
+{% endif %}
 
   ## Directories
   <Directory {{ item.document_root }}>
@@ -18,7 +23,7 @@
   ## Load additional static includes
 
   ## Logging
-  ErrorLog /var/log/apache2/{{ item.server_name }}_error.log
+  ErrorLog /var/log/apache2/{{ item.label }}_error.log
   ServerSignature Off
-  CustomLog /var/log/apache2/{{ item.server_name }}_access.log combined
+  CustomLog /var/log/apache2/{{ item.label }}_access.log combined
 </VirtualHost>
